@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remove Duplicate Patch Numbers</title>
+    <style>
+        textarea {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #output {
+            white-space: pre-line;
+        }
+    </style>
+</head>
+<body>
+    <textarea id="inputText" placeholder="Paste your patch numbers here..."></textarea>
+    <button onclick="removeDuplicatePatches()">Remove Duplicates</button>
+    <div id="output"></div>
+
+    <script>
+        function removeDuplicatePatches() {
+            // Get the input text from the textarea
+            let inputText = document.getElementById('inputText').value;
+
+            // Split the input text into an array of lines
+            let lines = inputText.split('\n');
+
+            // Create an object to keep track of the last occurrence of each patch number
+            let lastOccurrences = {};
+
+            // Iterate over each line in reverse order
+            for (let i = lines.length - 1; i >= 0; i--) {
+                let line = lines[i].trim();
+                if (line !== '') {
+                    // Extract the patch number
+                    let patchNumber = line.trim();
+
+                    // Check if this patch number has been seen before
+                    if (!(patchNumber in lastOccurrences)) {
+                        // If not, store its index
+                        lastOccurrences[patchNumber] = i;
+                    } else {
+                        // If yes, remove this line from the array
+                        lines.splice(i, 1);
+                    }
+                }
+            }
+
+            // Reconstruct the output text from the remaining lines
+            let outputText = lines.join('\n');
+
+            // Display the output text
+            document.getElementById('output').textContent = outputText;
+        }
+    </script>
+</body>
+</html>

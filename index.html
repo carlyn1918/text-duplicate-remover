@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Remove Duplicate Patch Numbers</title>
+    <title>Remove Duplicate EXP-Numbers</title>
     <style>
         textarea {
             width: 100%;
@@ -29,44 +29,25 @@
     </style>
 </head>
 <body>
-    <textarea id="inputText" placeholder="Paste your patch numbers here..."></textarea>
-    <button onclick="removeDuplicatePatches()">Remove Duplicates</button>
+    <textarea id="inputText" placeholder="Paste your EXP-Numbers here..."></textarea>
+    <button onclick="removeDuplicateExpNumbers()">Remove Duplicates</button>
     <div id="output"></div>
 
     <script>
-        function removeDuplicatePatches() {
-            // Get the input text from the textarea
+        function removeDuplicateExpNumbers() {
             let inputText = document.getElementById('inputText').value;
-
-            // Split the input text into an array of lines
-            let lines = inputText.split('\n');
-
-            // Create an object to keep track of the last occurrence of each patch number
-            let lastOccurrences = {};
-
-            // Iterate over each line in reverse order
-            for (let i = lines.length - 1; i >= 0; i--) {
-                let line = lines[i].trim();
-                if (line !== '') {
-                    // Extract the patch number
-                    let patchNumber = line.trim();
-
-                    // Check if this patch number has been seen before
-                    if (!(patchNumber in lastOccurrences)) {
-                        // If not, store its index
-                        lastOccurrences[patchNumber] = i;
-                    } else {
-                        // If yes, remove this line from the array
-                        lines.splice(i, 1);
-                    }
+            let expNumbers = inputText.split('\n');
+            let uniqueExpNumbers = [];
+            
+            for (let i = 0; i < expNumbers.length; i++) {
+                let expNumber = expNumbers[i].trim();
+                if (expNumber !== '' && uniqueExpNumbers.indexOf(expNumber) === -1) {
+                    uniqueExpNumbers.push(expNumber);
                 }
             }
 
-            // Reconstruct the output text from the remaining lines
-            let outputText = lines.join('\n');
-
-            // Display the output text
-            document.getElementById('output').textContent = outputText;
+            let outputText = uniqueExpNumbers.join('\n');
+            document.getElementById('output').innerText = outputText;
         }
     </script>
 </body>
